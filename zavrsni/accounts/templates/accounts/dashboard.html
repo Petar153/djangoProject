@@ -1,0 +1,225 @@
+{%extends 'travels/base.html' %}
+
+
+{% block content %}
+<div class="content container">
+    <div class="row">
+        <div class="col-md-9">
+          <h1>Hello {{user.account.name }}</h1>
+          <p>Email: {{user.email}}</p>
+       
+          {% if user.account.organization %} 
+
+      <div class="row">
+        <div class="col-md-12">
+          <h1>Available Travels</h1>
+          {% if available_travels %}
+
+          {% for travel in available_travels  %}
+          <div class="travel">
+            <h3>{{travel.title}}</h3>
+            <img src="{{travel.photo}}" style="width: 300px;">
+            <p>{{travel.desc}}</p>
+            <p><strong>City:</strong>  {{travel.location}}</p>
+            <p><strong>Date of travel:</strong> {{travel.date}}</p>
+            <p><strong>Status: </strong>{{travel.status}}</p>
+            <p>     
+              <a class="btn btn-primary" href="{% url 'accounts:available' travel.id %}">Edit</a>
+              <a class="btn btn-primary" href="{% url 'accounts:delete' travel.id %}">Delete</a>
+            </p>
+        </div>
+          {% endfor %}
+
+          {% else %}
+            <p>None at this time</p>
+          {% endif %} {# end if for if available travels exist #}
+
+        </div>
+      </div>
+        
+       
+      <div class="row">
+        <div class="col-md-12">
+          <h1>Ongoing Travels</h1>
+          {% if ongoing_travels %}
+
+          {% for place in ongoing_travels  %}
+          <div class="travel">
+            <h3>{{place.travel.title}}</h3>
+            <img src="{{place.travel.photo}}" style="width: 300px;">
+            <p>{{place.travel.desc}}</p>
+            <p><strong>City:</strong>  {{place.travel.location}}</p>
+            <p><strong>Date of travel:</strong> {{place.travel.date}}</p>
+            <p><strong>Status: </strong>{{place.travel.status}}</p>
+            <p>
+              <strong>Traveler: </strong><a href="{% url 'accounts:profile' place.traveler.id%}">{{place.traveler.account.name}}</a>
+              <a class="btn btn-primary" href="{% url 'accounts:chat' place.traveler.id%}">Message</a>
+            </p>
+            <p>     
+              <a class="btn btn-primary" href="{% url 'accounts:edit2' place.id %}">Edit</a>
+              <a class="btn btn-primary" href="{% url 'accounts:delete' place.travel.id %}">Delete</a>
+            </p>
+            
+            <p>
+              
+            </p>
+        </div>
+          {% endfor %}
+
+          {% else %}
+            <p>None at this time</p>
+          {% endif %} {# end if for if ongoing travels exist #}
+
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <h1>Completed Travels</h1>
+          {% if completed_travels %}
+
+          {% for place in completed_travels  %}
+          <div class="travel">
+            <h3>{{place.travel.title}}</h3>
+            <img src="{{place.travel.photo}}" style="width: 300px;">
+            <p>{{place.travel.desc}}</p>
+            <p><strong>City:</strong>  {{place.travel.location}}</p>
+            <p><strong>Date of travel:</strong> {{place.travel.date}}</p>
+            <p><strong>Status: </strong>{{place.travel.status}}</p>
+            <p>
+              <strong>Traveler: </strong><a href="{% url 'accounts:profile' place.traveler.id%}">{{place.traveler.account.name}}</a>
+              <a class="btn btn-primary" href="{% url 'accounts:chat' place.traveler.id%}">Message</a>
+            </p>
+          <p><strong>Rating: </strong> {{place.rating}}</p>
+          <p>
+            <a class="btn btn-primary" href="{% url 'accounts:delete' place.travel.id %}">Delete</a>
+          </p>
+        </div>
+          {% endfor %}
+
+          {% else %}
+            <p>None at this time</p>
+          {% endif %} {# end if ffor if completed travels exist #}
+        </div>
+      </div>
+
+
+
+
+      {% else %} {# else for if user isnt organization #}
+
+      <div class="row">
+        <div class="col-md-12">
+          <h1>Ongoing trips</h1>
+          {% if ongoing_trip %}
+
+          {% for trip in ongoing_trip  %}
+          <div class="trip">
+            <h3>{{trip.travel.title}}</h3>
+            <p>
+              <strong>Organization: </strong><a href="{% url 'accounts:profile' trip.travel.user.id%}">{{trip.travel.user.account.name}}</a>
+              <a class="btn btn-primary" href="{% url 'accounts:chat' trip.travel.user.id%}">Message</a>
+            </p>
+            <img src="{{trip.travel.photo}}" style="width: 300px;">
+            <p>{{trip.travel.desc}}</p>
+            <p><strong>City:</strong>  {{trip.travel.location}}</p>
+            <p><strong>Date of travel:</strong> {{trip.travel.date}}</p>
+            <p><strong>Status: </strong>{{trip.travel.status}}</p>
+        </div>
+          {% endfor %}
+
+          {% else %}
+            <p>None at this time</p>
+          {% endif %} {# end if ffor if ongoing trips exist #}
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <h1>Completed trips</h1>
+          {% if completed_trip %}
+
+          {% for trip in completed_trip  %}
+          <div class="trip">
+            <h3>{{trip.travel.title}}</h3>
+            
+            <p>
+              <strong>Organization: </strong><a href="{% url 'accounts:profile' trip.travel.user.id%}">{{trip.travel.user.account.name}}</a>
+              <a class="btn btn-primary" href="{% url 'accounts:chat' trip.travel.user.id%}">Message</a>
+            </p>
+            <img src="{{trip.travel.photo}}" style="width: 300px;">
+            <p>{{trip.travel.desc}}</p>
+            <p><strong>City:</strong>  {{trip.travel.location}}</p>
+            <p><strong>Date of travel:</strong> {{trip.travel.date}}</p>
+            <p><strong>Status: </strong>{{trip.travel.status}}</p>
+
+            
+            {% if trip.rating == 0 %}
+            <form method="post" action="{% url 'accounts:create-rate' %}">
+              {% csrf_token %}
+              <input type="hidden" name="trip_id" value="{{ trip.id }}">
+              <label>Rate: </label>
+               <select name="rate" id="rate">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+               </select>
+              <button type="submit"> Rate</button>
+          </form>
+            {% else %}
+
+            <p><strong>Rating: </strong> {{trip.rating}}</p>
+            {% endif %}
+              
+
+        </div>
+          {% endfor %}
+
+          {% else %}
+            <p>None at this time</p>
+          {% endif %} {# end if ffor if completed trips exist #}
+        </div>
+      </div>
+
+      {% endif %} {# end if for is user organization #}
+            
+        </div>
+        <div class="col-md-3">
+          <h1>Messages</h1>
+           <a href="{% url 'accounts:messages' %}">all messages</a>
+          <div class="messages">
+            
+            {% for message in my_messages  %}
+              <div class="message 
+              {% if request.user == message.sender_id %}
+                my-message
+                {% else %}
+                their-message
+              {% endif %}
+                ">
+                <strong>
+                  From:
+                  <a href="{% url 'accounts:profile' message.sender_id.id %}">
+                    {{message.sender_id.account.name}}
+                  </a>
+                </strong> <br>
+                <small>
+                  {{message.sent_at}}
+                </small>
+                <p>
+                  {{message.text}}
+                </p>
+              </div>
+            {% endfor %}
+              
+          </div>
+        </div>
+
+
+      </div>
+
+  </div>
+{% endblock content %}
+    

@@ -1,0 +1,48 @@
+{% extends "accounts/messages.html" %}
+
+{% block parent_content %}
+
+{# Chat box #}
+<p>{{user1.account.name}}</p>
+<div class="messages">
+            
+    {% for message in chat  %}
+      <div class="message 
+      {% if request.user == message.sender_id %}
+        my-message
+        {% else %}
+        their-message
+      {% endif %}
+        ">
+        <strong>
+          From:
+          <a href="{% url 'accounts:profile' message.sender_id.id %}">
+            {{message.sender_id.account.name}}
+          </a>
+        </strong> <br>
+        <small>
+          {{message.sent_at}}
+        </small>
+        <p>
+          {{message.text}}
+        </p>
+      </div>
+    {% endfor %}
+      
+  </div>
+
+
+{# Type message #}
+    
+<br>
+            <form method="post" action="{% url 'accounts:create-message' user_id %}">
+              {% csrf_token %}
+              
+             <input type="text" name="message" style="width: 90%;">
+              <button type="submit" style="width: 9%;"> Send</button>
+          </form>
+            
+           
+
+
+{% endblock %}

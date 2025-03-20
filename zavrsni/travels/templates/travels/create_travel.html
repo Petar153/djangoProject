@@ -1,0 +1,35 @@
+{% extends 'travels/base.html' %}
+
+{% block title %}
+Add travel
+{% endblock %}
+
+{% block content %}
+        <h1>Add new travel</h1>
+        <form method="post" action="{% url 'create-travel' %}">
+            {% csrf_token %}
+            <label>Title</label>
+            <input type="text" name="title">
+            <br>
+
+            <label>Description</label>
+            <input type="text" name="desc">
+            <br>
+            
+            <label>Location</label>
+            <input type="text" name="location">
+            <br>
+
+            <label>Date</label>
+            <input type="date" name="date">
+            <br>
+            
+            <label>Photo url</label>
+            <input type="text" name="url">
+            <br>
+            
+            <input type="submit" value="Add travel">
+        </form>
+
+
+{% endblock content %}

@@ -1,0 +1,40 @@
+{% extends 'images/base.html' %}
+
+{% block title %}
+Profile
+{% endblock %}
+
+{% block content %}
+    <p>{{ user.username}}</p>
+    <p>{{ user.first_name }} {{ user.last_name}}</p>
+    <p>{{ user.email}}</p>
+            
+    <h1>My images</h1>
+            {% for image in images %}
+                <h2>
+                    <a href="{% url 'detail' image.id %}">
+                        {{ image.title }}
+                    </a>
+                </h2>
+                <img src="{{ image.url }}" style="width: 300px;"/>
+            {% endfor %}
+
+    <h1>My comments</h1>
+        {% for comment in comments %}
+        <h2>
+            
+                {{ comment.text }}
+            
+        </h2>
+        
+        {% endfor %}
+
+    <h1>My likes</h1>
+        {% for like in likes %}
+            <p>
+                <img src="{{ like.image.url}}" style="width: 300px;"/>
+            </p>
+            
+            
+        {% endfor %}   
+{% endblock content %}

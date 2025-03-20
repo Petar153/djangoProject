@@ -1,0 +1,44 @@
+{% extends 'travels/base.html' %}
+
+{% block title %}
+Travel list
+{% endblock %}
+
+{% block content %}
+<div class="content container">
+    <div class="row">
+        <div class="col-md-12">
+            
+            {% if travels  %}
+                {% else %}
+                <p>None at this time</p>
+            {% endif %}
+                
+            {% for travel in travels  %}
+            <div class="travel">
+                <h3>{{travel.title}}</h3>
+                <p><strong>Organization: </strong><a href="{% url 'accounts:profile' travel.user.id%}">{{travel.user.account.name}}</a>
+                    <a class="btn btn-primary" href="{% url 'accounts:chat' travel.user.id%}">Message</a>
+                </p>
+                <img src="{{travel.photo}}" style="width: 300px;">
+                <p>{{travel.desc}}</p>
+                <p><strong>City:</strong>  {{travel.location}}</p>
+                <p><strong>Date of travel:</strong> {{travel.date}}</p>
+                <p><strong>Status: </strong>{{travel.status}}</p>
+                {% if request.user.is_authenticated %}
+                {% if not user.account.organization  %}
+                <form method="post" action="{% url 'create_trip' travel.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Join Trip</button>
+                </form>
+                {% endif %} {# for is organization #}
+                {% else %}
+                <a href="{% url 'login' %}">Login to join Trip</a>
+                {% endif %}{# for is auth #}
+                
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

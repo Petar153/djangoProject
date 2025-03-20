@@ -1,0 +1,45 @@
+.content p.red {
+    color: red;
+  }
+  
+  .app-fit {
+    height: auto;
+    width: 100%;
+    border: 1px solid black;
+  }
+  
+
+  
+  .content h1{
+    color: red; 
+  
+  }
+  
+  .full-width{
+    width: 100%;
+    height: auto;
+  }
+  
+ .messages {
+  padding: 5px;
+  border: 1px solid black;
+ }
+
+ .messages .message {
+  padding: 5px;
+  border: 1px solid red;
+  margin: 5px;
+  width: 70%;
+  background: #f1f1f1;
+ }
+
+ .messages .message.my-message {
+  border: 1px solid blue;
+  margin-left: auto;
+  margin-right: 5px;
+ }
+ .messages .message.their-message {
+  border: 1px solid red;
+  margin-left: 5px;
+  margin-right: auto;
+ }

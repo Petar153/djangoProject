@@ -1,0 +1,12 @@
+{% extends 'travels/base.html' %}
+
+{% block title %}
+Početna
+{% endblock %}
+
+{% block content %}
+    <h1>Welcome to Traveling app</h1>
+    <p>Current time: {{ current_time }}</p>
+    <br>
+    <p>Click here to see all available travels <a href="{% url 'list' %}">List</a></p>
+{% endblock content %}

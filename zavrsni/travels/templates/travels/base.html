@@ -1,0 +1,71 @@
+{% load static %}
+<html>
+  <head>
+    <title>
+        Traveling app | 
+        {% block title %}{% endblock %}
+    </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <link rel="stylesheet" href="{% static 'travels/css/travels.css' %}">
+  </head>
+
+  <body>
+    <div class="page-header">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'home' %}">Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'list'%}">All travels</a>
+            </li>
+            {% if request.user.account.organization %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'create-travel' %}">Add new travel</a>
+              </li>
+            {% endif %}
+          </ul>
+          <ul class="navbar-nav ml-auto">
+            {% if request.user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'accounts:dashboard' %}">{{user.account.name}}</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'accounts:profile' user.id %}">My profile</a>
+            </li>
+
+              <li class="nav-item">
+                <form action="{% url 'logout' %}" method="post">
+                  {% csrf_token %}
+                  <button class="btn btn-link nav-link" type="submit">Logout</button>
+                </form>
+              </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login' %}">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'accounts:signup' %}">SignUp</a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </nav>
+
+    </div>
+    <div class="content container">
+      <div class="row">
+        <div class="col-md-12">
+          {% block content %}
+          {% endblock %}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

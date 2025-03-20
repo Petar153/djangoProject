@@ -1,0 +1,50 @@
+{% extends "travels/base.html" %}
+
+{% block content %}
+
+
+<div class="content container">
+    <div class="row">
+        <div class="col-md-3" style="border-right: 2px solid black;">
+            <h1>All Messages</h1>
+            
+
+            
+            {% for message in my_messages  %}
+
+            <div class="messages">
+                <a href="{% url 'accounts:chat' message.sender_id.id%}">{{message.sender_id.account.name}}</a>
+                
+            </div>
+                
+            {% endfor %}
+
+            {% for message in messages2  %}
+
+            <div class="messages">
+                <a href="{% url 'accounts:chat' message.reciever_id.id%}">{{message.reciever_id.account.name}}</a>
+                
+            </div>
+                
+            {% endfor %}
+
+        </div>
+
+        <div class="col-md-9">
+            <h1>Message box</h1>
+            {% block parent_content %}
+
+            <p>Open the chat</p>
+
+            {% endblock %}
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+    
+
+{% endblock %}

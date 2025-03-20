@@ -1,0 +1,27 @@
+{% extends 'travels/base.html' %}
+
+{% block title %}
+Add travel
+{% endblock %}
+
+{% block content %}
+        <h1>Finish up</h1>
+        <form method="post" action="{% url 'accounts:finishup' %}">
+            {% csrf_token %}
+            <label>Profile name</label>
+            <input type="text" name="pn">
+            <br>
+            <label>Email</label>
+            <input type="email" name="email">
+            <br>
+
+            <input type="checkbox" id="org" name="org">
+            <label for="org">Organization</label>
+            <br>
+            <input type="submit" value="Finish">
+        </form>
+
+
+{% endblock content %}
+
+

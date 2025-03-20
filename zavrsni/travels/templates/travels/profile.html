@@ -1,0 +1,20 @@
+{% extends 'travels/base.html' %}
+
+{% block title %}
+Profile
+{% endblock %}
+
+{% block content %}
+    <p>{{ request.user.username}}</p>
+    <p>{{ request.user.first_name }} {{ request.user.last_name}}</p>
+    <p>{{ request.user.email}}</p>
+            
+    <h1>My images</h1>
+           
+
+    <h1>My comments</h1>
+        
+
+    <h1>My likes</h1>
+          
+{% endblock content %}
